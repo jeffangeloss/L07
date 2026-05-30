@@ -46,15 +46,21 @@ Crea el **diagrama de clases UML** del dominio de SalaUlima.
 **Entregable:** Diagrama de clases con multiplicidades y métodos clave.
 
 **Clase Sala**
+
 verificarDisponibilidad(fecha, franja): Boolean
 
 
 **Clase Reserva**
+
 confirmar(): void
+
 cancelar(): void
+
 esValidaParaCancelacion(): Boolean
 
+
 **Clase FranjaHoraria**
+
 duracion(): Date
 
 
