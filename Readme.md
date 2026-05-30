@@ -180,8 +180,17 @@ Crea el **diagrama de despliegue** para el entorno de producción de SalaUlima.
 
 **Tarea adicional:** ¿Qué riesgo de disponibilidad introduce esta arquitectura de menor costo? ¿Cómo lo documenta la Vista Física?
 
-**Entregable:** Diagrama de despliegue + análisis de riesgo.
+**Diagrama de despliegue + análisis de riesgo:**
+![Diagrama de Despliegue](image.png)
+### Análisis de Riesgos:
 
+El mayor riesgo de esta arquitectura es que introduce un SPOF (Single Point of Failure) absoluto en el servidor EC2.
+
+1. Falta de Redundancia y Alta Disponibilidad (HA): Al haber solo un EC2 sin cluster, si el servidor se cae (por un fallo de hardware de AWS), toda la aplicación SalaUlima queda completamente fuera de línea. No hay balanceador de carga para levantar otra instancia automáticamente.
+
+2. Saturación por Concurrencia: La instancia t3.small tiene solo 2 vCPUs y 2 GB de RAM. Al compartir el Frontend y el Backend en la misma máquina, un pico de usuarios reservando salas puede agotar la memoria, provocando que el sistema operativo mate los procesos.
+
+3. Actualizaciones con Interrupción: Cualquier despliegue de nueva versión o mantenimiento del servidor requerirá reiniciar el servicio, generando tiempo de inactividad.
 ---
 
 ## Ejercicio 5: Vista de Escenarios — Validación cruzada
