@@ -76,7 +76,7 @@ Crea DOS diagramas:
 
 ## Ejercicio 3: Vista de Desarrollo — Organización del código
 
-Crea el **diagrama de paquetes** de SalaUlima con arquitectura hexagonal.
+**Diagrama de paquetes** de SalaUlima con arquitectura hexagonal.
 
 **Módulos de dominio:**
 - `rooms` — catálogo y disponibilidad de salas
@@ -89,8 +89,83 @@ Crea el **diagrama de paquetes** de SalaUlima con arquitectura hexagonal.
 - Dependencias correctas (nunca infrastructure → domain directamente en módulos ajenos)
 - Módulo `shared` para código transversal
 
-**Entregable:** Diagrama de paquetes en PlantUML.
+**Diagrama de paquetes en PlantUML:**
 
+![Diagrama de Paquetes](DiagramaPaquetes.png)
+### Código PlantUML
+```plantuml
+@startuml
+title SalaUlima - Vista de Desarrollo - Diagrama de Paquetes
+
+package "frontend" {
+
+  package "authentication" as front_auth
+  package "rooms" as front_rooms
+  package "reservations" as front_reservations
+  package "admin" as front_admin
+}
+
+package "backend" {
+
+  package "shared" as shared {
+    package "domain"
+    package "exceptions"
+    package "utils"
+  }
+
+  package "rooms" as rooms {
+    package "domain" as rooms_domain
+    package "application" as rooms_application
+    package "infrastructure" as rooms_infrastructure
+  }
+
+  package "reservations" as reservations {
+    package "domain" as reservations_domain
+    package "application" as reservations_application
+    package "infrastructure" as reservations_infrastructure
+  }
+
+  package "users" as users {
+    package "domain" as users_domain
+    package "application" as users_application
+    package "infrastructure" as users_infrastructure
+  }
+
+  package "notifications" as notifications {
+    package "domain" as notifications_domain
+    package "application" as notifications_application
+    package "infrastructure" as notifications_infrastructure
+  }
+}
+
+front_auth ..> users_infrastructure : API REST
+front_rooms ..> rooms_infrastructure : API REST
+front_reservations ..> reservations_infrastructure : API REST
+front_admin ..> rooms_infrastructure : administrar salas
+
+rooms_application --> rooms_domain
+rooms_infrastructure --> rooms_application
+
+reservations_application --> reservations_domain
+reservations_infrastructure --> reservations_application
+
+users_application --> users_domain
+users_infrastructure --> users_application
+
+notifications_application --> notifications_domain
+notifications_infrastructure --> notifications_application
+
+reservations_application ..> rooms_application : verifica disponibilidad
+reservations_application ..> users_application : valida usuario
+reservations_application ..> notifications_application : confirmaciones y recordatorios
+
+rooms_domain ..> shared
+reservations_domain ..> shared
+users_domain ..> shared
+notifications_domain ..> shared
+
+@enduml
+```
 ---
 
 ## Ejercicio 4: Vista Física — Infraestructura de despliegue
