@@ -64,6 +64,13 @@ Crea DOS diagramas:
 5. 30 minutos antes: el sistema envía un recordatorio (proceso batch)
 
 **Entregable:** Diagrama de estado y diagrama de secuencia.
+## Diagrama de estados
+<img width="816" height="642" alt="image" src="https://github.com/user-attachments/assets/42ed5254-d515-4861-b9e3-a007183cfd5e" />
+
+
+## Diagrama de secuencia
+<img width="1043" height="865" alt="image" src="https://github.com/user-attachments/assets/90409583-0b6f-46d4-80a8-4c823289ff0a" />
+
 
 ---
 
